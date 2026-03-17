@@ -13,11 +13,12 @@ if [ ! -d ".git" ]; then
 fi
 
 # Запрос данных для .env
-read -p "Введите EMAIL_USER: " email_user
-read -p "Введите EMAIL_PASS: " email_pass
-read -p "Введите TELEGRAM_TOKEN: " tg_token
-read -p "Введите CHAT_ID: " chat_id
-read -p "Введите GEMINI_API_KEY: " gemini_key
+# Запрос данных для .env с использованием </dev/tty
+read -p "Введите EMAIL_USER: " email_user </dev/tty
+read -p "Введите EMAIL_PASS: " email_pass </dev/tty
+read -p "Введите TELEGRAM_TOKEN: " tg_token </dev/tty
+read -p "Введите CHAT_ID: " chat_id </dev/tty
+read -p "Введите GEMINI_API_KEY: " gemini_key </dev/tty
 
 cat <<EOF > .env
 EMAIL_USER=$email_user
