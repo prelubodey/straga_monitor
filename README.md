@@ -1,50 +1,5 @@
-Straga AI Monitor 🤖📩
-Автоматизированная система мониторинга почтовых отчетов с использованием искусственного интеллекта (Google Gemini).
+Установка
+curl -sSL https://raw.githubusercontent.com/prelubodey/straga_monitor/main/setup.sh | bash
 
-📋 Описание
-Скрипт ежедневно в 09:10 по МСК проверяет почтовый ящик на наличие новых отчетов в формате PDF от системы мониторинга. При получении письма файл отправляется в нейросеть Gemini для анализа. Бот уведомляет в Telegram только о наличии нарушений или подтверждает их отсутствие.
-
-🛠 Технологии
-Python 3.11
-
-Google GenAI (Gemini 1.5 Flash) — анализ содержимого PDF.
-
-IMAP — чтение электронной почты.
-
-Schedule — планировщик задач.
-
-Docker & Docker Compose — контейнеризация и развертывание.
-
-🚀 Быстрый запуск
-1. Настройка окружения
-Создайте файл .env в корневой папке проекта:
-
-Фрагмент кода
-# Email
-IMAP_SERVER=ваш_сервер
-EMAIL_USER=ваш_логин
-EMAIL_PASS=ваш_пароль
-SENDER_EMAIL=email_отправителя_отчетов
-
-# API
-GEMINI_API_KEY=ваш_ключ_gemini
-TELEGRAM_BOT_TOKEN=токен_бота
-TELEGRAM_CHAT_ID=ваш_id
-2. Запуск через Docker Compose
-Находясь в директории с проектом, выполните:
-
-Bash
-docker compose up -d --build
-⚙️ Функционал
-Интеллектуальный анализ: Нейросеть ищет пропуски меток и отклонения от графика в PDF-файле.
-
-Работа по расписанию: Проверка запускается строго в заданное время (09:10 МСК) благодаря библиотекам schedule и pytz.
-
-Логирование: Все действия и результаты анализа выводятся в консоль контейнера.
-
-📝 Полезные команды
-Просмотр логов: docker logs -f straga-ai-monitor
-
-Принудительная проверка (вне графика): docker exec -it straga-ai-monitor python -c "from st import process_last_email; process_last_email()"
-
-Пересборка после правки кода: docker compose up -d --build straga_monitor
+Проверка работоспособности
+docker exec -it straga-ai-monitor python3 -u -c "from st import process_last_email; process_last_email()"
