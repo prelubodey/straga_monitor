@@ -19,7 +19,7 @@ def process_last_email():
 
     try:
         # 1. Подключение и поиск
-        mail = imaplib.IMAP4_SSL(os.getenv('IMAP_SERVER'), 993, ssl_context=context)
+        mail = imaplib.IMAP4_SSL("mail.rbauto.ru", 993, ssl_context=context)
         mail.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
         mail.select("INBOX")
         
