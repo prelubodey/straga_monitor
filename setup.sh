@@ -1,44 +1,40 @@
 #!/bin/bash
+echo "🚀 Установка Straga Monitor..."
 
-echo "------------------------------------------------"
-echo "🚀 Начинаю установку окружения для ботов..."
-echo "------------------------------------------------"
-
-# 1. Обновление системы
-sudo apt-get update && sudo apt-get upgrade -y
-
-# 2. Установка Docker
-if ! command -v docker &> /dev/null
-then
-    echo "📦 Устанавливаю Docker..."
-    curl -fsSL https://get.docker.com -o get-docker.sh
-    sh get-docker.sh
-    sudo usermod -aG docker $USER
-else
-    echo "✅ Docker уже установлен."
+if ! command -v docker &> /dev/null; then
+    curl -fsSL https://get.docker.com -o get-docker.sh && sh get-docker.sh
 fi
 
-# 3. Создание структуры папок
-mkdir -p /root/projects
-cd /root/projects
+mkdir -p /root/projects/straga_monitor
+cd /root/projects/straga_monitor
 
-# 4. Клонирование репозиториев
-echo "git Клонирую проекты..."
-git clone https://github.com/prelubodey/buhgalter_kds.git
-git clone https://github.com/prelubodey/straga_monitor.git
+if [ ! -d ".git" ]; then
+    git clone https://github.com/prelubodey/straga_monitor.git .
+fi
 
-echo "------------------------------------------------"
-echo "✅ УСТАНОВКА ЗАВЕРШЕНА УСПЕШНО!"
-echo "------------------------------------------------"
-echo "⚠️  ВНИМАНИЕ: НЕОБХОДИМО ВЫПОЛНИТЬ СЛЕДУЮЩИЕ ШАГИ:"
-echo ""
-echo "1. Создать файлы .env в директориях:"
-echo "   - /root/projects/buhgalter_kds/.env"
-echo "   - /root/projects/straga_monitor/.env"
-echo ""
-echo "2. Создать файл docker-compose.yml в директории:"
-echo "   - /root/projects/docker-compose.yml"
-echo ""
-echo "3. После добавления файлов запустите ботов командой:"
-echo "   cd /root/projects && docker compose up -d --build"
-echo "------------------------------------------------"
+# Запрос данных для .env
+read -p "Введите EMAIL_USER: " email_user
+read -p "Введите EMAIL_PASS: " email_pass
+read -p "Введите TELEGRAM_TOKEN: " tg_token
+read -p "Введите CHAT_ID: " chat_id
+read -p "Введите GEMINI_API_KEY: " gemini_key
+
+cat <<EOF > .env
+EMAIL_USER=$email_user
+EMAIL_PASS=$email_pass
+TELEGRAM_TOKEN=$tg_token
+CHAT_ID=$chat_id
+GEMINI_API_KEY=$gemini_key
+EOF
+
+cat <<EOF > docker-compose.yml
+services:
+  straga_monitor:
+    build: .
+    container_name: straga-ai-monitor
+    restart: always
+    env_file: .env
+EOF
+
+docker compose up -d --build
+echo "✅ Мониторинг запущен!"
