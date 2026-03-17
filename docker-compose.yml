@@ -1,0 +1,6 @@
+services:
+  straga_monitor:
+    build: .
+    container_name: straga-ai-monitor
+    restart: always
+    env_file: .env
