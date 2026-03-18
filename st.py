@@ -106,11 +106,29 @@ def process_daily_emails():
                                 logger.info(f"Отчет {filename} успешно отправлен в Telegram.")
                             else:
                                 logger.error(f"Ошибка отправки {filename} в Telegram: {tg_resp.text}")
+
+                            # 6. Дублирование в МАКС
+                            max_token = os.getenv('MAX_BOT_TOKEN')
+                            max_chat = os.getenv('MAX_CHAT_ID')
+                            if max_token and max_chat:
+                                try:
+                                    max_resp = requests.post(
+                                        "https://app.api-messenger.com/sendMessage",
+                                        headers={"Authorization": f"Bearer {max_token}"},
+                                        json={"chat_id": max_chat, "text": text},
+                                        timeout=10
+                                    )
+                                    if max_resp.status_code == 200:
+                                        logger.info(f"Отчет {filename} успешно продублирован в МАКС.")
+                                    else:
+                                        logger.error(f"Ошибка отправки в МАКС: {max_resp.text}")
+                                except Exception as e:
+                                    logger.error(f"Сбой при попытке отправить сообщение в МАКС: {e}")
                                 
                         except Exception as ai_e:
                             logger.error(f"Ошибка при анализе файла {filename} с помощью ИИ: {ai_e}")
 
-                        # Небольшая пауза между файлами, чтобы не спамить в ТГ
+                        # Небольшая пауза между файлами, чтобы не спамить
                         time.sleep(2)
         finally:
             # Гарантируем закрытие соединения при любой ошибке
