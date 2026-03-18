@@ -8,7 +8,7 @@ ENV TZ="Europe/Moscow"
 WORKDIR /app
 
 # Устанавливаем зависимости
-RUN pip install --no-cache-dir google-genai requests python-dotenv schedule
+RUN pip install --no-cache-dir google-genai requests python-dotenv schedule pytz
 
 # Копируем код в контейнер
 COPY . .
