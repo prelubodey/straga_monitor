@@ -26,3 +26,15 @@ docker compose down
 ```bash
 docker compose up -d --build
 ```
+Посмотреть, кто запущен	
+```bash
+docker ps
+```
+Посмотреть все контейнеры (даже выключенные)	
+```bash
+docker ps -a
+```
+Посмотреть логи в реальном времени	
+```bash
+docker logs -f straga-ai-monitor
+```
