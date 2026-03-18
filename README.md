@@ -8,7 +8,7 @@ docker exec -it straga-ai-monitor python3 -u -c "from st import process_last_ema
 ```
 Перейдите в папку: 
 ```bash
-cd /root/projects/buhgalter_monitor
+cd /root/projects/straga_monitor
 ```
 Остановить бота:
 ```bash
