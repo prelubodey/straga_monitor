@@ -6,8 +6,10 @@ curl -sSL https://raw.githubusercontent.com/prelubodey/straga_monitor/main/setup
 ```bash
 docker exec -it straga-ai-monitor python3 -u -c "from st import process_last_email; process_last_email()"
 ```
-Перейдите в папку: cd /root/projects/buhgalter_monitor
-
+Перейдите в папку: 
+```bash
+cd /root/projects/buhgalter_monitor
+```
 Остановить бота:
 ```bash
 docker compose stop
