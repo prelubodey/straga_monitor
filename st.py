@@ -68,8 +68,8 @@ def process_daily_emails():
                         # 4. Анализ ИИ
                         prompt = (
                         "Analyze the patrol report and extract the following information strictly in this format. The output MUST be in Russian:\n"
-                        "Период отчета: [Time period, convert dates to DD.MM.YYYY hh:mm:ss format, e.g.: 04.10.2025 09:00:00 - 05.10.2025 09:00:00]\n"
                         "Город: [Object name from the header, e.g.: Симферополь]\n"
+                        "Период отчета: [Time period, convert dates to DD.MM.YYYY hh:mm:ss format, e.g.: 04.10.2025 09:00:00 - 05.10.2025 09:00:00]\n"
                         "Запланировано обходов: [Number of scheduled patrols]\n"
                         "Выполнено обходов: [Number of completed patrols]\n"
                         "Нарушений: [Number of violations]\n\n"
