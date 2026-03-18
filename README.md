@@ -4,7 +4,7 @@ curl -sSL https://raw.githubusercontent.com/prelubodey/straga_monitor/main/setup
 ```
 Проверка работоспособности
 ```bash
-docker exec -it straga-ai-monitor python3 -u -c "from st import process_last_email; process_last_email()"
+docker exec -it straga-ai-monitor python3 -u -c "from st import process_daily_emails; process_daily_emails()"
 ```
 Перейдите в папку: 
 ```bash
