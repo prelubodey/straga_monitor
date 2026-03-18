@@ -26,7 +26,6 @@ read -p "Введите ваш TELEGRAM_CHAT_ID: " chat_id </dev/tty
 
 # 5. Создание .env с ПРАВИЛЬНЫМИ именами переменных для st.py
 cat <<EOF > .env
-IMAP_SERVER=mail.rbauto.ru
 EMAIL_USER=$email_user
 EMAIL_PASS=$email_pass
 GEMINI_API_KEY=$gemini_key
