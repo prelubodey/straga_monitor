@@ -4,8 +4,9 @@ from datetime import datetime
 from google import genai
 from dotenv import load_dotenv
 
-# Загружаем переменные
-load_dotenv()
+# Загружаем переменные из .env в папке со скриптом
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger("straga_monitor")
@@ -28,8 +29,15 @@ def process_daily_emails():
 
     try:
         # 1. Подключение
+        email_user = os.getenv('EMAIL_USER')
+        email_pass = os.getenv('EMAIL_PASS')
+        
+        if not email_user or not email_pass:
+            logger.error("ОШИБКА: EMAIL_USER или EMAIL_PASS не найдены в .env!")
+            return
+
         mail = imaplib.IMAP4_SSL("mail.rbauto.ru", 993, ssl_context=context)
-        mail.login(os.getenv('EMAIL_USER'), os.getenv('EMAIL_PASS'))
+        mail.login(email_user, email_pass)
         
         try:
             mail.select("INBOX")
