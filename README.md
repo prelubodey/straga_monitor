@@ -39,6 +39,4 @@ docker ps -a
 Посмотреть логи в реальном времени	
 ```bash
 docker logs -f straga-ai-monitor
-
-docker exec -it straga-ai-monitor cat app.log
 ```
