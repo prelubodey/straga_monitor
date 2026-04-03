@@ -2,7 +2,22 @@
 echo "?? Обновление конфигурации Straga Monitor..."
 
 PROJECT_DIR="/root/projects/straga_monitor"
+mkdir -p "$PROJECT_DIR"
 cd "$PROJECT_DIR"
+
+# Проверка наличия docker-compose.yml и других необходимых файлов
+if [ ! -f "docker-compose.yml" ] || [ ! -f "Dockerfile" ] || [ ! -f "st.py" ]; then
+    echo "? Файлы проекта отсутствуют. Скачиваю из GitHub..."
+    
+    # Скачиваем файлы из репозитория
+    FILES=("docker-compose.yml" "Dockerfile" "st.py" ".gitignore" "README.md")
+    REPO_RAW_URL="https://raw.githubusercontent.com/prelubodey/straga_monitor/main"
+
+    for file in "${FILES[@]}"; do
+        echo "Скачивание $file..."
+        curl -sSL "$REPO_RAW_URL/$file" -o "$file"
+    done
+fi
 
 # Запрос данных
 read -p "Введите EMAIL_USER: " email_user </dev/tty
